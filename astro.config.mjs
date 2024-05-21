@@ -26,6 +26,4 @@ export default defineConfig({
   }), tailwind({
     applyBaseStyles: false
   }), tailwind()],
-  output: "server",
-  adapter: cloudflare()
 });
