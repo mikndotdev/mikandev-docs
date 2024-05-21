@@ -1,7 +1,8 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
-
 import tailwind from "@astrojs/tailwind";
+
+import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
@@ -10,25 +11,21 @@ export default defineConfig({
     social: {
       github: 'https://github.com/withastro/starlight'
     },
-	customCss: [
-        './src/tailwind.css',
-    ],
-    sidebar: [
-		{
+    customCss: ['./src/tailwind.css'],
+    sidebar: [{
       label: 'General documentation',
       autogenerate: {
         directory: 'general'
-      },
-	},
-	{
-	  label: 'MikanUI',
+      }
+    }, {
+      label: 'MikanUI',
       autogenerate: {
         directory: 'ui'
       }
     }]
-  }), 
-  tailwind({
-	applyBaseStyles: false,
-  }),
-  tailwind()]
+  }), tailwind({
+    applyBaseStyles: false
+  }), tailwind()],
+  output: "server",
+  adapter: cloudflare()
 });
