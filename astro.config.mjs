@@ -9,6 +9,16 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: "MikanDev Docs",
+			head: [
+				{
+				  tag: 'script',
+				  attrs: {
+					src: 'https://analytics.mikandev.tech/script.js',
+					'data-website-id': '628ab888-7361-429b-b5ad-6db257e29109',
+					defer: true,
+				  },
+				},
+			  ],
 			social: {
 				github: "https://github.com/withastro/starlight",
 			},
