@@ -9,6 +9,7 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: "MikanDev Docs",
+			favicon: "/favicon.ico",
 			head: [
 				{
 				  tag: 'script',
