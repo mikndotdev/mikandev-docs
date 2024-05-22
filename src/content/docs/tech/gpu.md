@@ -24,7 +24,7 @@ We provide services on a dedicated GPU server, and a timeslot based ultra-high p
 | Identifier            | Ultra-High Performance PC 2 |
 |-----------------------|-------------------------|
 | CPU                   | AMD Ryzen 9 7900X     |
-| RAM                   | 64GB DDR5               |
+| RAM                   | 128GB DDR5               |
 | Storage               | 2x 2TB SSD              |
 | Hardware Acceleration | nVidia GeForce RTX 4090 |
 
