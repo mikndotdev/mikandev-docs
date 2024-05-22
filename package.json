@@ -1,23 +1,25 @@
 {
-  "name": "mikandev-docs",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro check && astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/check": "^0.7.0",
-    "@astrojs/cloudflare": "^10.2.6",
-    "@astrojs/starlight": "^0.23.1",
-    "@astrojs/starlight-tailwind": "^2.0.3",
-    "@astrojs/tailwind": "^5.1.0",
-    "astro": "^4.8.6",
-    "sharp": "^0.32.5",
-    "tailwindcss": "^3.4.3",
-    "typescript": "^5.4.5"
-  }
+	"name": "mikandev-docs",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build": "astro check && astro build",
+		"preview": "astro preview",
+		"format": "biome format --write .",
+		"astro": "astro"
+	},
+	"dependencies": {
+		"@astrojs/check": "^0.7.0",
+		"@astrojs/cloudflare": "^10.2.6",
+		"@astrojs/starlight": "^0.23.1",
+		"@astrojs/starlight-tailwind": "^2.0.3",
+		"@astrojs/tailwind": "^5.1.0",
+		"@biomejs/biome": "^1.7.3",
+		"astro": "^4.8.6",
+		"sharp": "^0.32.5",
+		"tailwindcss": "^3.4.3",
+		"typescript": "^5.4.5"
+	}
 }

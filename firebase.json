@@ -1,11 +1,7 @@
 {
-  "hosting": {
-    "site": "mikandev-docs",
-    "public": "dist",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
-  }
+	"hosting": {
+		"site": "mikandev-docs",
+		"public": "dist",
+		"ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+	}
 }
