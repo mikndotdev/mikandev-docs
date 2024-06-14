@@ -19,7 +19,7 @@ The words of which the initial letter is capitalized have meanings defined under
 For the purposes of this Privacy Policy:
 
 - __Account__ means a unique account created for You to access our Service or parts of our Service.
-- __Affiliate__ means an entity that controls, is controlled by or is under common control with a party, where "control" means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.
+- __Affiliate__ means an entity that controls, is controlled by or is under common control with a party, where "control" means a strategic partnership with MikanDev.
 
 
 
@@ -89,11 +89,7 @@ We may also collect information that Your browser sends whenever You visit our S
 
 The Company allows You to create an account and log in to use the Service through the following Third-party Social Media Services:
 
-- Google
-- Facebook
-- Instagram
-- Twitter
-- LinkedIn
+- Discord
 
 If You decide to register through or otherwise grant us access to a Third-Party Social Media Service, We may collect Personal data that is already associated with Your Third-Party Social Media Service's account, such as Your name, Your email address, Your activities or Your contact list associated with that account.
 
