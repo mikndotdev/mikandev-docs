@@ -43,6 +43,12 @@ export default defineConfig({
 						directory: "ui",
 					},
 				},
+				{
+					label: "Legal",
+					autogenerate: {
+						directory: "legal",
+					},
+				},
 			],
 		}),
 		tailwind({
