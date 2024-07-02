@@ -30,6 +30,12 @@ export default defineConfig({
 					},
 				},
 				{
+					label: "Solutions",
+					autogenerate: {
+						directory: "solutions",
+					},
+				},
+				{
 					label: "MikanDev Tech",
 					autogenerate: {
 						directory: "tech",
