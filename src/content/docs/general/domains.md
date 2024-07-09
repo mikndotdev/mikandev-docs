@@ -1,7 +1,7 @@
 ---
 title: "Domains list"
 ---
-## MikanDev host's its content on the following domains:
+## MikanDev hosts its content on the following domains:
 
 - https://mikandev.com/
 - https://mikn.dev/
@@ -14,4 +14,4 @@ title: "Domains list"
 - https://mikn.blog/
 - https://mikandev.com/
 
-## All other donains are used for internal purposes only. Any other related domains are not related to MikanDev.
+## All other domains are used for internal purposes only. Any other related domains are not related to MikanDev.
