@@ -13,7 +13,7 @@ export default defineConfig({
 				  tag: 'script',
 				  attrs: {
 					src: 'https://analytics.mikandev.tech/script.js',
-					'data-website-id': '628ab888-7361-429b-b5ad-6db257e29109',
+					'data-website-id': '1f6c3a70-33f7-4544-8099-4203d041f5f8',
 					defer: true,
 				  },
 				},
