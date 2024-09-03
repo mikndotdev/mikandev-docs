@@ -2,11 +2,17 @@
 title: "Privacy Policy"
 ---
 
-Last updated: June 14, 2024
+Last updated: September 4, 2024
 
-This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.
+# The gist
 
-We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy.
+- We only use your personal information for proper provision of our services.
+- We collect some basic personal information, such as your name, E-mail, and social media IDs. These help make our job easier, and make the experience better for you.
+- We don't share your information with any third parties. That would be a shitty thing to do.
+- We don't provide services to children under 13. If we have done so accidentally, you can [request deletion.](#delete-your-personal-data)
+- You can [contact us](#contact-us) if you have any further questions. You can also do so if you want to delete your information.
+
+# Stuff to show your lawyer
 
 ## Interpretation and Definitions
 
@@ -257,4 +263,4 @@ If you have any questions about this Privacy Policy, You can contact us:
 - By visiting this page on our website: [https://mikn.dev/contact](https://mikn.dev/contact)
 
 
-- By phone number: +81 05018084545
+- By phone number: +81 05055320721
