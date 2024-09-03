@@ -19,7 +19,7 @@ export default defineConfig({
 				},
 			  ],
 			social: {
-				github: "https://github.com/withastro/starlight",
+				github: "https://github.com/mikndotdev",
 			},
 			customCss: ["./src/tailwind.css"],
 			sidebar: [

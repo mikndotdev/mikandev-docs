@@ -3,8 +3,8 @@
 	"type": "module",
 	"version": "0.0.1",
 	"engines": {
-    		"node": ">=18.0.0"
-  	},
+		"node": ">=18.0.0"
+	},
 	"scripts": {
 		"dev": "astro dev",
 		"start": "astro dev",
@@ -14,13 +14,13 @@
 		"astro": "astro"
 	},
 	"dependencies": {
-		"@astrojs/check": "^0.7.0",
-		"@astrojs/cloudflare": "^10.2.6",
-		"@astrojs/starlight": "^0.23.1",
+		"@astrojs/check": "0.9.3",
+		"@astrojs/cloudflare": "11.0.4",
+		"@astrojs/starlight": "0.26.2",
 		"@astrojs/starlight-tailwind": "^2.0.3",
 		"@astrojs/tailwind": "^5.1.0",
 		"@biomejs/biome": "^1.7.3",
-		"astro": "^4.8.6",
+		"astro": "4.15.2",
 		"sharp": "^0.32.5",
 		"tailwindcss": "^3.4.3",
 		"typescript": "^5.4.5"
