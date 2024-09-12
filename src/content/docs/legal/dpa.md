@@ -2,7 +2,7 @@
 title: MikanDev Data Processing Agreement
 ---
 
-MikanDev is a Japanese organization and our data infrastructure is based in Finland and Japan, a safe third country designated by the EU. Both are covered by the EU’s strong data privacy laws. Processing and storing data in a secure, fair, and transparent way is extremely important to us.
+MikanDev is a Japanese organization and our data infrastructure is based in the United Kingdom and Japan, both safe third countries designated by the EU. Both are covered by the EU’s strong data privacy laws. Processing and storing data in a secure, fair, and transparent way is extremely important to us.
 
 This Data Processing Agreement (“DPA”) is an addendum to the Terms of Service between MikanDev and the customer.
 
