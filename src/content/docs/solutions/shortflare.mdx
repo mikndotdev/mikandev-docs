@@ -1,0 +1,298 @@
+---
+title: ShortFlare
+---
+import { Image } from "astro:assets";
+import { Aside } from '@astrojs/starlight/components';
+
+import addD1 from "./assets/shortflare/select-d1.png";
+import createD1 from "./assets/shortflare/create-d1.png";
+import addColumns from "./assets/shortflare/d1-columns.png";
+import BindD1 from "./assets/shortflare/bind-d1.png";
+
+<Aside>This service is still a work-in-progress, and some features may not work properly.</Aside>
+
+## Introduction
+Shorten and track URLs on your domain for completely free with your Cloudflare account!
+- Unlimited URLs
+- Ultra low-latency redirects hanks to Cloudflare's 275+ locations
+- Free unlimited geo-located analytics (up to Workers Free limit off 100k per day)
+- Manage your links with an API, or a dashboard
+- No need to [sign up for three billion different SaaS products](https://github.com/dubinc/dub?tab=readme-ov-file#tech-stack), all you need is that Cloudflare account you already have
+- Easy (ish) setup
+
+## Setup the Worker
+1. [Go create a Cloudflare Account](https://cloudflare.com/) (lets be honest, you probably already have one)
+2. Go to "D1" under the "Workers and Pages" tab
+
+<Image src={addD1} alt="Go to D1" />
+
+3. Create a D1 database with any name you want
+
+<Image src={createD1} alt="Create D1 database" />
+
+4. Once the database has been created, create a table with;
+-  the name "urls"
+- the columns "slug" and "destination" (both text)
+
+<Image src={addColumns} alt="Add columns" />
+
+5. Go to the "Workers" tab, and create a new worker, and continue to project
+
+6. Under the "settings" tab, add the following environment variables:
+
+| Key | Value |
+| --- | --- |
+| API_TOKEN | Your API token |
+| NOT_FOUND_URL | The URL to redirect to if the slug is not found |
+| TRACKING_API_TOKEN | Your tracking API token |
+| TRACKING_API_URL | Your tracking API URL (leave as anything for now) |
+
+<Aside>Use a password generator for the API tokens (or just smash your keyboard and hope for the best), and keep them safe!</Aside>
+
+7. Bind the D1 database we created before to the worker, with the variable name "DB"
+
+<Image src={BindD1} alt="Bind D1 database" />
+
+8. Save the changes, and now go to "Edit Code" on the top right
+
+9. Replace `index.js` with the following; [skip to below](#the-worker-is-now-set-up)
+
+```js
+// index.js
+export default {
+  async fetch(request, env) {
+    return await handleRequest(request, env)
+  }
+}
+
+async function handleRequest(request, env) {
+  const url = new URL(request.url)
+  const path = url.pathname
+
+  // Check if it's an API endpoint
+  if (path.startsWith('/api/')) {
+    // Verify Bearer token
+    const authHeader = request.headers.get('Authorization')
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return new Response('Unauthorized', { status: 401 })
+    }
+    
+    const token = authHeader.split(' ')[1]
+    if (token !== env.API_TOKEN) {
+      return new Response('Unauthorized', { status: 401 })
+    }
+
+    // Handle API endpoints
+    try {
+      if (path === '/api/add' && request.method === 'POST') {
+        return handleAdd(request, env)
+      } else if (path === '/api/delete' && request.method === 'POST') {
+        return handleDelete(request, env)
+      } else if (path === '/api/list' && request.method === 'GET') {
+        return handleList(env)
+      } else {
+        return new Response('Not Found', { status: 404 })
+      }
+    } catch (error) {
+      if (error.message === 'No JSON in request') {
+        return new Response('Bad Request: No JSON found in request body', { status: 400 })
+      }
+      throw error  // Re-throw other errors
+    }
+  }
+
+  // Handle redirect for short URLs
+  return handleRedirect(request, env)
+}
+
+async function getJSONFromRequest(request) {
+  const contentType = request.headers.get('content-type')
+  if (!contentType || !contentType.includes('application/json')) {
+    throw new Error('No JSON in request')
+  }
+
+  try {
+    return await request.json()
+  } catch (error) {
+    throw new Error('No JSON in request')
+  }
+}
+
+async function handleAdd(request, env) {
+  const { slug, destination } = await getJSONFromRequest(request)
+  
+  if (!slug || !destination) {
+    return new Response('Missing slug or destination', { status: 400 })
+  }
+
+  try {
+    // Check if the slug already exists
+    const existingSlug = await env.DB.prepare('SELECT slug FROM urls WHERE slug = ?')
+      .bind(slug)
+      .first()
+    
+    if (existingSlug) {
+      return new Response('Slug already exists', { status: 409 })
+    }
+
+    // If the slug doesn't exist, proceed with insertion
+    await env.DB.prepare('INSERT INTO urls (slug, destination) VALUES (?, ?)')
+      .bind(slug, destination)
+      .run()
+    return new Response('URL added successfully', { status: 200 })
+  } catch (error) {
+    return new Response('Error adding URL: ' + error.message, { status: 500 })
+  }
+}
+
+async function handleDelete(request, env) {
+  const { slug } = await getJSONFromRequest(request)
+  
+  if (!slug) {
+    return new Response('Missing slug', { status: 400 })
+  }
+
+  try {
+    // First, check if the slug exists
+    const checkResult = await env.DB.prepare('SELECT slug FROM urls WHERE slug = ?')
+      .bind(slug)
+      .first()
+    
+    if (!checkResult) {
+      return new Response('Slug not found', { status: 404 })
+    }
+
+    // If the slug exists, proceed with deletion
+    await env.DB.prepare('DELETE FROM urls WHERE slug = ?')
+      .bind(slug)
+      .run()
+    
+    return new Response('URL deleted successfully', { status: 200 })
+  } catch (error) {
+    console.error('Error deleting URL:', error)
+    return new Response('Error deleting URL: ' + error.message, { status: 500 })
+  }
+}
+
+async function handleList(env) {
+  try {
+    const result = await env.DB.prepare('SELECT * FROM urls').all()
+    return new Response(JSON.stringify(result.results), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    })
+  } catch (error) {
+    return new Response('Error listing URLs: ' + error.message, { status: 500 })
+  }
+}
+
+async function trackVisit(slug, request, env) {
+  const country = request.headers.get('CF-IPCountry') || 'Unknown'
+  console.log (env.TRACKING_API_URL)
+  try {
+    await fetch(env.TRACKING_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${env.TRACKING_API_TOKEN}`
+      },
+      body: JSON.stringify({
+        slug,
+        country
+      })
+    })
+  } catch (error) {
+    // Log the error, but don't prevent the redirect
+    console.error('Error tracking visit:', error)
+  }
+}
+
+async function handleRedirect(request, env) {
+  const url = new URL(request.url)
+  const slug = url.pathname.slice(1) // Remove leading slash
+  
+  if (!slug) {
+    return Response.redirect(env.NOT_FOUND_URL, 302)
+  }
+
+  try {
+    const result = await env.DB.prepare('SELECT destination FROM urls WHERE slug = ?')
+      .bind(slug)
+      .first()
+    if (result && result.destination) {
+      // Track the visit before redirecting
+      await trackVisit(slug, request, env)
+      return Response.redirect(result.destination, 302)
+    } else {
+      return Response.redirect(env.NOT_FOUND_URL, 302)
+    }
+  } catch (error) {
+    console.error('Error redirecting:', error)
+    return Response.redirect(env.NOT_FOUND_URL, 302)
+  }
+}
+```
+## The worker is now set up!
+You can now either;
+
+- [Continue to setup the frontend](#frontend-setup)
+- [Use the API directly with no further setup](#api-usage)
+
+## Frontend Setup
+
+Set the following environment variables in your frontend:
+
+| Key | Value |
+| --- | --- |
+| PASSWORD | A password to protect the frontend |
+| WORKER_URL | The URL of your worker |
+| WORKER_API_TOKEN | The API token you set in the worker |
+| WORKER_TRACKING_TOKEN | The tracking API token you set in the worker |
+| NEXTAUTH_SECRET | A secret for NextAuth (random string) |
+
+- [Deploy the frontend to your server with Coolify](https://coolify.io/docs/knowledge-base/git/gitea/integration/#public-repositories) (recommended)
+    - Set the Install command to `bun i` and the build command to `bun run build`
+    - Set the start command to `bun start`
+
+- Manual setup
+    - Coming soon!
+
+Once you have deployed the frontend, you can access it at the URL you deployed it to. Login with the password you set in the environment variables, and have fun!
+
+### Analytics Setup
+- Set the `TRACKING_API_URL` environment variable in the worker to:
+    - `https://your-frontend-url/api/worker/analytics`
+
+## API Usage
+
+### Add a URL
+- Endpoint: `https://your-worker-url/api/add`
+- Method: `POST`
+- Headers:
+    - `Authorization: Bearer YOUR_API_TOKEN`
+- Body:
+    ```json
+    {
+        "slug": "your-slug",
+        "destination": "https://your-destination-url"
+    }
+    ```
+
+### Delete a URL
+- Endpoint: `https://your-worker-url/api/delete`
+- Method: `POST`
+- Headers:
+    - `Authorization: Bearer YOUR_API_TOKEN`
+- Body:
+    ```json
+    {
+        "slug": "slug to delete"
+    }
+    ```
+
+### List all URLs
+- Endpoint: `https://your-worker-url/api/list`
+- Method: `GET`
+- Headers:
+    - `Authorization: Bearer YOUR_API_TOKEN`
+    
