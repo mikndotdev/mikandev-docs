@@ -1,4 +1,5 @@
 import { defineConfig } from "astro/config";
+import starlightImageZoom from "starlight-image-zoom";
 import starlight from "@astrojs/starlight";
 import tailwind from "@astrojs/tailwind";
 
@@ -7,6 +8,9 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: "MikanDev Docs",
+			logo: {
+				src: "./src/assets/mikan.png",
+			},
 			favicon: "/favicon.ico",
 			head: [
 				{
@@ -53,6 +57,9 @@ export default defineConfig({
 						directory: "legal",
 					},
 				},
+			],
+			plugins: [
+				starlightImageZoom(),
 			],
 		}),
 		tailwind({
