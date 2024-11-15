@@ -17,6 +17,7 @@
 		"@astrojs/check": "0.9.3",
 		"@astrojs/cloudflare": "11.0.4",
 		"@astrojs/starlight": "0.26.2",
+		"@astrojs/starlight-docsearch": "^0.3.0",
 		"@astrojs/starlight-tailwind": "^2.0.3",
 		"@astrojs/tailwind": "^5.1.0",
 		"@biomejs/biome": "^1.7.3",

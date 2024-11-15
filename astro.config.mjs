@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config";
 import starlightImageZoom from "starlight-image-zoom";
+import starlightDocSearch from '@astrojs/starlight-docsearch';
 import starlight from "@astrojs/starlight";
 import tailwind from "@astrojs/tailwind";
 
@@ -60,6 +61,11 @@ export default defineConfig({
 			],
 			plugins: [
 				starlightImageZoom(),
+				starlightDocSearch({
+					appId: 'KRQFAC5Z85',
+					apiKey: 'c4b66d49f62268958e939c0eabab55db',
+					indexName: 'mikn',
+				}),
 			],
 		}),
 		tailwind({
