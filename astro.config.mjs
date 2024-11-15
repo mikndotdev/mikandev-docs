@@ -23,8 +23,8 @@ export default defineConfig({
 				{
 					tag: "script",
 					attrs: {
-						src: "https://analytics.mikandev.tech/script.js",
-						"data-website-id": "1f6c3a70-33f7-4544-8099-4203d041f5f8",
+						src: "https://analytics.mikandev.com/script.js",
+						"data-website-id": "bf219215-a751-466e-8487-9ce23b9b98c9",
 						defer: true,
 					},
 				},
