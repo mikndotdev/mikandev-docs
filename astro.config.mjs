@@ -1,11 +1,17 @@
 import { defineConfig } from "astro/config";
 import starlightImageZoom from "starlight-image-zoom";
-import starlightDocSearch from '@astrojs/starlight-docsearch';
+import starlightDocSearch from "@astrojs/starlight-docsearch";
 import starlight from "@astrojs/starlight";
 import tailwind from "@astrojs/tailwind";
 
+import cloudflare from "@astrojs/cloudflare";
+
 // https://astro.build/config
 export default defineConfig({
+	output: "hybrid",
+	adapter: cloudflare({
+		imageService: "compile",
+	}),
 	integrations: [
 		starlight({
 			title: "MikanDev Docs",
@@ -15,14 +21,14 @@ export default defineConfig({
 			favicon: "/favicon.ico",
 			head: [
 				{
-				  tag: 'script',
-				  attrs: {
-					src: 'https://analytics.mikandev.tech/script.js',
-					'data-website-id': '1f6c3a70-33f7-4544-8099-4203d041f5f8',
-					defer: true,
-				  },
+					tag: "script",
+					attrs: {
+						src: "https://analytics.mikandev.tech/script.js",
+						"data-website-id": "1f6c3a70-33f7-4544-8099-4203d041f5f8",
+						defer: true,
+					},
 				},
-			  ],
+			],
 			social: {
 				github: "https://github.com/mikndotdev",
 			},
@@ -62,9 +68,9 @@ export default defineConfig({
 			plugins: [
 				starlightImageZoom(),
 				starlightDocSearch({
-					appId: 'KRQFAC5Z85',
-					apiKey: 'c4b66d49f62268958e939c0eabab55db',
-					indexName: 'mikn',
+					appId: "KRQFAC5Z85",
+					apiKey: "c4b66d49f62268958e939c0eabab55db",
+					indexName: "mikn",
 				}),
 			],
 		}),
