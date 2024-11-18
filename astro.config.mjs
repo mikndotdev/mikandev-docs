@@ -3,7 +3,7 @@ import starlightImageZoom from "starlight-image-zoom";
 import starlightDocSearch from "@astrojs/starlight-docsearch";
 import starlight from "@astrojs/starlight";
 import tailwind from "@astrojs/tailwind";
-
+import swup from '@swup/astro';
 import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
@@ -78,5 +78,8 @@ export default defineConfig({
 			applyBaseStyles: false,
 		}),
 		tailwind(),
+		swup({
+			theme: "slide",
+		}),
 	],
 });
