@@ -21,7 +21,7 @@ MikanDev may also own domains from previous services or projects. These domains 
 <br>
 We may also acquire expired domains to prevent misuse.
 <br>
-If you have any questions about a domain, feel free to contact us.
+We do not intend to squat on these domains, so if you have a legitimate use for a domain we own, please contact us, and we will be happy to transfer it to you.
 <br>
 Parked domains will show a parking page that looks like this:
 
