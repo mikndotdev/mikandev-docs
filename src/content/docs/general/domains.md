@@ -17,7 +17,11 @@ All front-facing pages are available on the following domains:
 All other domains are used for internal purposes only. Any other related domains are not related to MikanDev.
 
 ## Domain Parking
-MikanDev may also own domains from previous services or projects. These domains are parked and not in use. If you have any questions about a domain, feel free to contact us.
+MikanDev may also own domains from previous services or projects. These domains are parked and not in use. 
+<br>
+We may also acquire expired domains to prevent misuse.
+<br>
+If you have any questions about a domain, feel free to contact us.
 <br>
 Parked domains will show a parking page that looks like this:
 
