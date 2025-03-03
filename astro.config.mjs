@@ -3,12 +3,11 @@ import starlightImageZoom from "starlight-image-zoom";
 import starlightDocSearch from "@astrojs/starlight-docsearch";
 import starlight from "@astrojs/starlight";
 import tailwind from "@astrojs/tailwind";
-import swup from '@swup/astro';
 import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-	output: "hybrid",
+	output: "static",
 	adapter: cloudflare({
 		imageService: "compile",
 	}),
@@ -23,10 +22,20 @@ export default defineConfig({
 				{
 					tag: "script",
 					attrs: {
-						src: "https://analytics.mikandev.com/script.js",
-						"data-website-id": "bf219215-a751-466e-8487-9ce23b9b98c9",
+						src: "https://cdn.mikn.dev/analytics/script",
 						defer: true,
 					},
+				},
+				{
+					tag: "script",
+					content: `
+					  document.addEventListener('DOMContentLoaded', function() {
+						swetrix.init('MtbYzx4P3t1x', {
+						  apiURL: 'https://analytics.mikandev.tech/log',
+						})
+						swetrix.trackViews()
+					  })
+					 `,
 				},
 			],
 			social: {
@@ -78,8 +87,5 @@ export default defineConfig({
 			applyBaseStyles: false,
 		}),
 		tailwind(),
-		swup({
-			theme: "slide",
-		}),
 	],
 });
