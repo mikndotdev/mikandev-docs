@@ -60,18 +60,6 @@ export default defineConfig({
                 },
             },
             {
-                label: "MikanDev Tech",
-                autogenerate: {
-                    directory: "tech",
-                },
-            },
-            {
-                label: "MikanUI",
-                autogenerate: {
-                    directory: "ui",
-                },
-            },
-            {
                 label: "Legal",
                 autogenerate: {
                     directory: "legal",
