@@ -1,0 +1,53 @@
+---
+title: Setup
+---
+import { PackageManagers } from 'starlight-package-managers'
+import { Aside } from '@astrojs/starlight/components';
+
+## Install and Configure
+
+- Install the package:
+
+<PackageManagers type="install" pkg="@mikandev/next-discord-auth" pkgManagers={['npm', 'pnpm' , 'bun']}/>
+
+- Create an Auth configuration file somewhere in your project, for example `src/auth.ts`:
+
+```ts
+import { setup } from "@mikandev/next-discord-auth";
+
+await setup({
+	clientId: process.env.DISCORD_CLIENT_ID as string,
+	clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
+	redirectUri: process.env.DISCORD_REDIRECT_URI as string,
+	scopes: ["identify", "email"],
+	jwtSecret: process.env.JWT_SECRET as string,
+});
+```
+- `clientId`: Your Discord application's client ID.
+- `clientSecret`: Your Discord application's client secret.
+- `redirectUri`: The URI to redirect to after authentication. This should match the redirect URI set in your Discord application settings.
+- `scopes`: The scopes to request from Discord. Defaults to `["identify", "email"]`. Read the [Discord Developer Docs](https://discord.com/developers/docs/topics/oauth2) for more information on scopes.
+- `jwtSecret`: A secret used to sign the JWT tokens. This should be a long, random string. Try using `openssl rand -base64 32` to generate one, or just hit random keys on your keyboard and hope for the best :3
+
+<Aside type="danger">Do **NOT** put your secrets directly in this file! Use environment variables instead. You can use a `.env` file to store them locally, and set them in your deployment environment.</Aside>
+
+This package will also infer [AuthJS Environment variables](https://authjs.dev/getting-started/providers/discord#environment-variables), so if you have those set, you don't need to set the `clientId` and `clientSecret` options.
+
+## Create a Callback Route
+- Create a Route Handler on your callback route, for example `src/app/auth/callback/route.ts`:
+
+```ts
+import { handleRedirect } from "@mikandev/next-discord-auth/redirect";
+import { NextRequest } from "next/server";
+import { redirect } from "next/navigation";
+
+import "@/auth";
+
+export const GET = async (request: NextRequest) => {
+	await handleRedirect(request);
+	redirect("/");
+};
+```
+Make sure to set your Discord application's redirect URI to match this route, in this case `http://localhost:3000/auth/callback`
+
+You are now ready to [use the package](/solutions/developers/next-discord-auth/usage)!
