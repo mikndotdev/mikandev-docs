@@ -4,4 +4,117 @@ title: Usage
 import { PackageManagers } from 'starlight-package-managers'
 import { Aside } from '@astrojs/starlight/components';
 
-WIP
+<Aside type="note">This package doesn't provide support for Client Components. Make sure all your auth logic is done serverside.</Aside>
+
+## Get Session
+- import the `getSession` function from the package, as well as call the `setup` function in your auth configuration file (as shown in the [Setup](/solutions/developers/next-discord-auth/setup) section):
+
+```ts
+import { getSession } from "@mikandev/next-discord-auth/server-actions";
+import "@/auth";
+```
+
+- You can now use the `getSession` function in your server components, server actions, or route handlers:
+
+```tsx
+export default async function Page() {
+    const session = await getSession();
+
+    return (
+		<main className="flex flex-col justify-center items-center min-h-screen gap-2">
+			<img src={session.user.avatar} alt="Avatar" width={100} height={100} className="rounded-full" />
+			<span>Welcome, {session.user.name}!</span>
+			<span> (ID: {session.user.id})</span>
+			<form
+				action={async () => {
+					"use server";
+					await signOut();
+				}}
+			>
+				<button type="submit" className={"btn btn-error"}>
+					Sign out
+				</button>
+			</form>
+			<Link href="/session" className="btn btn-secondary">
+				View Session Data
+			</Link>
+		</main>
+	);
+}
+
+```
+
+<Aside type="note">The Session object is designed to be AuthJS-compatible, so you can use it like you would with AuthJS's `Session` type.</Aside>
+
+- You can check if the user is authenticated by checking if the session is `null`:
+
+```tsx
+export default async function Page() {
+    const session = await getSession();
+
+	if (!session) {
+        return (
+            <h1 className={"font-bold text-2xl mb-2"}>You are not signed in.</h1>
+        );
+    }
+
+    return (
+        <h1 className={"font-bold text-2xl mb-2"}>Welcome, {session.user.name}!</h1>
+    );
+}
+```
+## Sign In and Sign Out
+- import the `signIn` and `signOut` function from the package, as well as call the `setup` function in your auth configuration file (as shown in the [Setup](/solutions/developers/next-discord-auth/setup) section):
+
+```ts
+import { signIn, signOut } from "@mikandev/next-discord-auth/server-actions";
+import "@/auth";
+```
+- You can now use the `signIn` and `signOut` functions in your server components, server actions, or route handlers:
+
+<Aside type="note">Use a Form to call the `signIn` and `signOut` functions from within a page, as they are server actions.</Aside>
+
+```tsx
+export default async function Home() {
+	const session = await getSession();
+	if (!session) {
+		return (
+			<main className="flex flex-col justify-center items-center min-h-screen">
+				<h1 className={"font-bold text-2xl mb-2"}>You are not signed in.</h1>
+				<form
+					action={async () => {
+						"use server";
+						await signIn();
+					}}
+				>
+					<button type="submit" className={"btn btn-primary"}>
+						Sign in
+					</button>
+				</form>
+			</main>
+		);
+	}
+
+	return (
+		<main className="flex flex-col justify-center items-center min-h-screen gap-2">
+			<img src={session.user.avatar} alt="Avatar" width={100} height={100} className="rounded-full" />
+			<span>Welcome, {session.user.name}!</span>
+			<span> (ID: {session.user.id})</span>
+			<form
+				action={async () => {
+					"use server";
+					await signOut();
+				}}
+			>
+				<button type="submit" className={"btn btn-error"}>
+					Sign out
+				</button>
+			</form>
+			<Link href="/session" className="btn btn-secondary">
+				View Session Data
+			</Link>
+		</main>
+	);
+```
+## Handle Callbacks
+- If you followed the [Setup](/solutions/developers/next-discord-auth/setup) section, you already have a callback route set up. If not, make sure to create a route handler on your callback route, as shown in the [Setup](/solutions/developers/next-discord-auth/setup#create-a-callback-route) section.
