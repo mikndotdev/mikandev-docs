@@ -1,5 +1,9 @@
 ---
 title: Introduction
+video:
+    type: video
+    link: https://youtu.be/ZBc05iHwoPA
+    duration: 442
 ---
 
 <p align="center">

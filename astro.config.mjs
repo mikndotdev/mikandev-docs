@@ -6,6 +6,7 @@ import catppuccin from "@catppuccin/starlight";
 
 import starlightLlmsTxt from "starlight-llms-txt";
 import starlightCoolerCredit from "starlight-cooler-credit";
+import starlightVideos from "starlight-videos";
 
 import inoxToolsStarWarp from "@inox-tools/star-warp";
 
@@ -74,7 +75,7 @@ export default defineConfig({
 						directory: "legal",
 					},
 				},
-				{ label: 'llms.txt', link: '/llms.txt' },
+				{ label: "llms.txt", link: "/llms.txt" },
 			],
 			plugins: [
 				starlightImageZoom(),
@@ -85,10 +86,11 @@ export default defineConfig({
 				}),
 				starlightLlmsTxt(),
 				starlightCoolerCredit(),
+				starlightVideos(),
 				catppuccin({
 					dark: { flavor: "mocha", accent: "yellow" },
-					light: { flavor: "latte", accent: "sky" }
-				})
+					light: { flavor: "latte", accent: "sky" },
+				}),
 			],
 		}),
 		inoxToolsStarWarp(),
