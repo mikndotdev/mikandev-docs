@@ -7,8 +7,8 @@ import catppuccin from "@catppuccin/starlight";
 import starlightLlmsTxt from "starlight-llms-txt";
 import starlightCoolerCredit from "starlight-cooler-credit";
 import starlightVideos from "starlight-videos";
-
 import inoxToolsStarWarp from "@inox-tools/star-warp";
+import starlightGiscus from 'starlight-giscus'
 
 import tailwindcss from "@tailwindcss/vite";
 
@@ -90,6 +90,12 @@ export default defineConfig({
 				catppuccin({
 					dark: { flavor: "mocha", accent: "yellow" },
 					light: { flavor: "latte", accent: "sky" },
+				}),
+				starlightGiscus({
+					repo: 'mikndotdev/mikandev-docs',
+					repoId: 'R_kgDOL-oJKw',
+					category: 'Comments',
+					categoryId: 'DIC_kwDOL-oJK84Cq3kv',
 				}),
 			],
 		}),
