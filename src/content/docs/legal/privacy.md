@@ -263,4 +263,4 @@ If you have any questions about this Privacy Policy, You can contact us:
 - By visiting this page on our website: [https://mikn.dev/contact](https://mikn.dev/contact)
 
 
-- By phone number: +81 05055320721
+- By phone number: +81 09092763628
