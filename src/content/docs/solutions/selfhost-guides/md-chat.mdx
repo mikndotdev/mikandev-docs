@@ -60,3 +60,11 @@ docker run -d \
 ```
 - This will start the MD Chat server on port 3000, and you can access it at `http://localhost:3000`.
 - Make sure to adjust the port and other settings as needed for your deployment environment.
+
+<Aside type="tip">I'm a huge fan of [Coolify](https://coolify.io), which is an amazing piece of free software makes deploying, managing and proxiying Docker containers to your infrstructure a breeze. It's what the MD Chat demo and MikanDev's Logto instance is running on, and I highly recommend it for self-hosting!</Aside>
+## Docker Compose
+
+<Aside type="caution">While this setup is great to quickly get started, for production deployments it is recommended to manually set up each service and configure them according to your needs.</Aside>
+
+- An example Docker Compose file is available in the [repository](https://github.com/mikndotdev/chat/blob/master/compose.yml), which has all the necessary services configured except for Logto.
+- You can use this file to quickly set up a local development environment with MD Chat, Postgres, Redis, and S3-compatible storage.
