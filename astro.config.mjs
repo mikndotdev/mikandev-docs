@@ -70,6 +70,12 @@ export default defineConfig({
 					},
 				},
 				{
+					label: "Self-host guides",
+					autogenerate: {
+						directory: "solutions/selfhost-guides",
+					},
+				},
+				{
 					label: "Legal",
 					autogenerate: {
 						directory: "legal",
