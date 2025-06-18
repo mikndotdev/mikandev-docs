@@ -1,0 +1,62 @@
+---
+title: MD Chat
+---
+import { Aside } from '@astrojs/starlight/components';
+
+## Auth backend
+- MD Chat relies on [Logto](https://logto.io/) as the authentication backend, which is a powerful open-source identity and access management solution.
+- You may choose to [self-host Logto](https://docs.logto.io/logto-oss/get-started-with-oss) or use their [cloud service](https://cloud.logto.io).
+
+<Aside type="note">MD Chat has only been tested to work with a self-hosted Logto instance, but Logto Cloud _should_ work just as well.</Aside>
+
+- Once you have Logto set up, create a Traditional Web app with the following settings:
+  - **Name**: A name for your app, e.g. "MD Chat"
+  - **Redirect URI**: `http://(your-app-url)/callback`
+
+- Keep the Client ID and Client Secret handy, as you will need them to configure MD Chat.
+
+## Deployment
+
+<Aside type="caution">Due to a reliance on a traditional Postgres database, MD Chat is designed to be deployed as a Docker container and may not work on serverless platforms like Vercel or Cloudflare Workers.</Aside>
+
+To start, you will need the following:
+- A Logto instance and app credentials as described above.
+- A Postgres database
+- A Redis instance
+- An S3-compatible object storage (e.g. AWS S3, Tigris, Cloudflare R2, etc.) for storing uploaded files.
+
+The Docker image is available on [GitHub](https://ghcr.io/mikndotdev/chat), and can be pulled with the following command:
+
+```bash
+docker pull ghcr.io/mikndotdev/chat:latest
+```
+
+Setup the environment variables in your Docker container. A sample `.env` file might look like this:
+```bash
+DATABASE_URL="postgres://postgres:password@1.2.3.4:5402/postgres"
+REDIS_URL="redis://:username@5.6.7.8:5409/0"
+LOGTO_APP_ID="your-logto-app-id"
+LOGTO_APP_SECRET="your-logto-app-secret"
+LOGTO_ENDPOINT="https://(your-logto-instance).logto.io"
+LOGTO_COOKIE_SECRET="a-random-secret-string"
+S3_ENDPOINT="https://s3.example.com"
+S3_ACCESS_KEY_ID="your-s3-access-key-id"
+S3_SECRET_ACCESS_KEY="your-s3-secret-access-key"
+S3_BUCKET_NAME="your-s3-bucket-name"
+S3_REGION="your-s3-region"
+S3_UPLOAD_DIR="any-directory-you-want"
+S3_PUBLIC_URL="https://s3.example.com/your-s3-bucket-name/"
+```
+<Aside type="note">Make sure to set the `S3_PUBLIC_URL` to the public URL of your S3 bucket, as this is used to serve uploaded files. If you have a seperate CDN behind your bucket, set that as the public URL.</Aside>
+
+You can then run the container with the following command:
+
+```bash
+docker run -d \
+  --name md-chat \
+  -p 3000:80 \
+  --env-file .env \
+  ghcr.io/mikndotdev/chat:latest
+```
+- This will start the MD Chat server on port 3000, and you can access it at `http://localhost:3000`.
+- Make sure to adjust the port and other settings as needed for your deployment environment.
