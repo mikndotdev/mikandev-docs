@@ -63,6 +63,12 @@ export default defineConfig({
 						directory: "general",
 					},
 				},
+                {
+                    label: "Solutions",
+                    autogenerate: {
+                        directory: "solutions/general",
+                    },
+                },
 				{
 					label: "Developer solutions",
 					autogenerate: {
