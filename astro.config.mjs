@@ -8,9 +8,11 @@ import starlightLlmsTxt from "starlight-llms-txt";
 import starlightCoolerCredit from "starlight-cooler-credit";
 import starlightVideos from "starlight-videos";
 import inoxToolsStarWarp from "@inox-tools/star-warp";
-import starlightGiscus from 'starlight-giscus'
+import starlightGiscus from "starlight-giscus";
 
 import tailwindcss from "@tailwindcss/vite";
+
+import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
@@ -40,13 +42,13 @@ export default defineConfig({
 				{
 					tag: "script",
 					content: `
-                  document.addEventListener('DOMContentLoaded', function() {
-                    swetrix.init('MtbYzx4P3t1x', {
-                      apiURL: 'https://analytics.mikandev.tech/log',
-                    })
-                    swetrix.trackViews()
-                  })
-                 `,
+              document.addEventListener('DOMContentLoaded', function() {
+                swetrix.init('MtbYzx4P3t1x', {
+                  apiURL: 'https://analytics.mikandev.tech/log',
+                })
+                swetrix.trackViews()
+              })
+             `,
 				},
 			],
 			social: [
@@ -63,12 +65,12 @@ export default defineConfig({
 						directory: "general",
 					},
 				},
-                {
-                    label: "Solutions",
-                    autogenerate: {
-                        directory: "solutions/general",
-                    },
-                },
+				{
+					label: "Solutions",
+					autogenerate: {
+						directory: "solutions/general",
+					},
+				},
 				{
 					label: "Developer solutions",
 					autogenerate: {
@@ -104,13 +106,14 @@ export default defineConfig({
 					light: { flavor: "latte", accent: "sky" },
 				}),
 				starlightGiscus({
-					repo: 'mikndotdev/mikandev-docs',
-					repoId: 'R_kgDOL-oJKw',
-					category: 'Comments',
-					categoryId: 'DIC_kwDOL-oJK84Cq3kv',
+					repo: "mikndotdev/mikandev-docs",
+					repoId: "R_kgDOL-oJKw",
+					category: "Comments",
+					categoryId: "DIC_kwDOL-oJK84Cq3kv",
 				}),
 			],
 		}),
 		inoxToolsStarWarp(),
+		react(),
 	],
 });
