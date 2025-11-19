@@ -25,11 +25,6 @@ jobs:
       - name: Build site
         run: bun run build
 
-      - name: Connect to Tailscale
-        uses: tailscale/github-action@v4
-        with:
-          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
-
       - name: Upload via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
