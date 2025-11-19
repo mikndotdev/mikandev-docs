@@ -6,6 +6,6 @@ import { videosSchema } from "starlight-videos/schemas";
 export const collections = {
 	docs: defineCollection({
 		schema: docsSchema({ extend: videosSchema }),
-		loading: docsLoader(),
+		loader: docsLoader(),
 	}),
 };
