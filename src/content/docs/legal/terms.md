@@ -30,6 +30,9 @@ You agree to use our Services only for lawful purposes and in accordance with th
 - We reserve the right to suspend or terminate your access to paid Services if your payment is not received or if there are issues with your payment method.
 - You are responsible for any fees associated with currency conversion or international transactions.
 
+## 3a. Third-Party payment processors
+- Our order process is conducted by our online reseller Paddle.com. Paddle.com is the Merchant of Record for all our orders. Paddle provides all customer service inquiries and handles returns.
+
 ## 4. Intellectual Property
 - All content and materials provided through our Services, including but not limited to text, graphics, logos, images, and software, are the property of MikanDev or its licensors and are protected by intellectual property laws.
 - You may not use, reproduce, distribute, or create derivative works from our content without our express written permission.
