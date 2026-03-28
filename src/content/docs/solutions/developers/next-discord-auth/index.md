@@ -1,9 +1,9 @@
 ---
 title: Introduction
 video:
-    type: video
-    link: https://youtu.be/ZBc05iHwoPA
-    duration: 442
+  type: video
+  link: https://youtu.be/ZBc05iHwoPA
+  duration: 442
 ---
 
 <p align="center">
@@ -20,6 +20,7 @@ video:
 - Designed for easy migration from AuthJS
 
 ## Why?
+
 There are many good auth libraries for Next.js, but most of them don't provide good Discord support, or require a database, or are just plain bad.
 
 - [Better Auth](httpe://better-auth.com) is great, but requires a database making it complicated for simple projects.
@@ -30,9 +31,11 @@ There are many good auth libraries for Next.js, but most of them don't provide g
 This package aims to provide a simple, server-side solution for Discord authentication that works out of the box with Next.js.
 
 ## Demo
+
 You can see a live demo of this package in action at <br>
 [https://next-discord-auth-demo.maamokun.workers.dev](https://next-discord-auth-demo.maamokun.workers.dev)
 
 ## Open Source
+
 This package is open source and available under the [WTFPL License](https://wtfpl.net/).<br>
 Feel free to [contribute](https://github.com/mikndotdev/next-discord-auth) or use it in your projects!

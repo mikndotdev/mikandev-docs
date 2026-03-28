@@ -1,8 +1,9 @@
 ---
 title: "Legal Documentation"
 sidebar:
-    hidden: true
+  hidden: true
 ---
+
 - [Privacy Policy](/legal/privacy)
 - [Terms Of Service](/legal/terms)
 - [特定商取引法に基づく表記（Specified Commerce Terms, JP only）](/legal/jp-payments)

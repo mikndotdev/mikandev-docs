@@ -1,0 +1,196 @@
+---
+title: Client-Side Usage
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="note">
+  Client-side hooks are useful when you need to access session data in Client Components, or when
+  you want real-time session updates without page refreshes.
+</Aside>
+
+## Why Client-Side Hooks?
+
+While this package is primarily designed for server-side authentication, sometimes you need to access session data in Client Components:
+
+- Building interactive UIs that depend on user data
+- Displaying user information in client-side navigation
+- Implementing real-time session updates
+- Using third-party libraries that require client components
+
+## Create a Session Provider Route
+
+First, create an API route that will serve session data to your client components. This route handler strips out sensitive tokens before sending the session to the client.
+
+Create a route handler, for example at `src/app/api/auth/me/route.ts`:
+
+```ts
+import { createSessionProviderRoute } from "@mikandev/next-discord-auth/client";
+import "@/auth";
+
+export const GET = createSessionProviderRoute();
+```
+
+<Aside type="caution">
+  This route automatically excludes `accessToken` and `refreshToken` from the response, ensuring
+  sensitive credentials are never exposed to the client.
+</Aside>
+
+## Wrap Your App with the Provider
+
+In your root layout or a client component wrapper, add the `UserInfoProvider`:
+
+```tsx
+// src/app/layout.tsx or src/components/providers.tsx
+"use client";
+
+import { UserInfoProvider } from "@mikandev/next-discord-auth/client";
+import { ReactNode } from "react";
+
+export function Providers({ children }: { children: ReactNode }) {
+  return <UserInfoProvider path="/api/auth/me">{children}</UserInfoProvider>;
+}
+```
+
+Then use it in your root layout:
+
+```tsx
+// src/app/layout.tsx
+import { Providers } from "@/components/providers";
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        <Providers>{children}</Providers>
+      </body>
+    </html>
+  );
+}
+```
+
+<Aside type="tip">
+  The `path` prop should match the route you created in the previous step. You can customize this
+  path to fit your routing structure.
+</Aside>
+
+## Use the Hook in Client Components
+
+Now you can use the `useUserInfo()` hook in any client component within your provider:
+
+```tsx
+"use client";
+
+import { useUserInfo } from "@mikandev/next-discord-auth/client";
+
+export function UserProfile() {
+  const { session, isLoading, isError, mutate } = useUserInfo();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error loading session</div>;
+  }
+
+  if (!session) {
+    return <div>Not signed in</div>;
+  }
+
+  return (
+    <div>
+      <img src={session.user.avatar} alt="Avatar" width={50} height={50} className="rounded-full" />
+      <span>Welcome, {session.user.name}!</span>
+      <span>ID: {session.user.id}</span>
+      <button onClick={() => mutate()}>Refresh Session</button>
+    </div>
+  );
+}
+```
+
+## Hook API Reference
+
+The `useUserInfo()` hook returns an object with the following properties:
+
+- `session`: The current session object (without `accessToken` and `refreshToken`), or `null` if not authenticated
+- `isLoading`: Boolean indicating if the session is being loaded
+- `isError`: Boolean indicating if there was an error loading the session
+- `mutate`: Function to manually revalidate the session data
+
+<Aside type="note">
+  The session data is cached and automatically revalidated on reconnect. You can manually trigger a
+  refresh by calling the `mutate()` function.
+</Aside>
+
+## Security Considerations
+
+<Aside type="danger">
+  **Important**: Never expose `accessToken` or `refreshToken` to client components. The
+  `createSessionProviderRoute` function automatically strips these sensitive fields before sending
+  the session to the client.
+</Aside>
+
+The client-side session object only contains:
+
+- `user`: User information (id, name, email, avatar)
+- `expires`: Session expiration timestamp
+
+Sensitive tokens remain server-side only and are never exposed to the browser.
+
+## Example: Navigation Bar
+
+Here's a complete example of a navigation bar using the client-side hooks:
+
+```tsx
+"use client";
+
+import { useUserInfo } from "@mikandev/next-discord-auth/client";
+import Link from "next/link";
+
+export function Navbar() {
+  const { session, isLoading } = useUserInfo();
+
+  return (
+    <nav className="flex items-center justify-between p-4">
+      <Link href="/" className="font-bold text-xl">
+        My App
+      </Link>
+
+      <div className="flex items-center gap-4">
+        {isLoading ? (
+          <span>Loading...</span>
+        ) : session ? (
+          <>
+            <img
+              src={session.user.avatar}
+              alt="Avatar"
+              width={32}
+              height={32}
+              className="rounded-full"
+            />
+            <span>{session.user.name}</span>
+            <form action="/auth/signout" method="POST">
+              <button type="submit" className="btn btn-error">
+                Sign Out
+              </button>
+            </form>
+          </>
+        ) : (
+          <form action="/auth/signin" method="POST">
+            <button type="submit" className="btn btn-primary">
+              Sign In
+            </button>
+          </form>
+        )}
+      </div>
+    </nav>
+  );
+}
+```
+
+<Aside type="tip">
+  For sign in/sign out actions, you still need to use server actions as shown in the
+  [Usage](/solutions/developers/next-discord-auth/usage#sign-in-and-sign-out) section. The
+  client-side hooks are only for reading session data.
+</Aside>

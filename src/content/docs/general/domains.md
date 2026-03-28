@@ -1,7 +1,9 @@
 ---
 title: "Domains list"
 ---
+
 ## Hosted Domains
+
 MikanDev hosts its content on the following domains:
 
 - https://mikandev.com/
@@ -11,13 +13,15 @@ MikanDev hosts its content on the following domains:
 - https://mikandev.tech/
 
 All front-facing pages are available on the following domains:
+
 - https://mikn.dev/
 - https://mikandev.com/
 
 All other domains are used for internal purposes only. Any other related domains are not related to MikanDev.
 
 ## Domain Parking
-MikanDev may also own domains from previous services or projects. These domains are parked and not in use. 
+
+MikanDev may also own domains from previous services or projects. These domains are parked and not in use.
 <br>
 We may also acquire expired domains to prevent misuse.
 <br>
