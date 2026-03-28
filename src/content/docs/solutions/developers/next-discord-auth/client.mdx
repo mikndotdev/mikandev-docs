@@ -25,13 +25,10 @@ First, create an API route that will serve session data to your client component
 Create a route handler, for example at `src/app/api/auth/me/route.ts`:
 
 ```ts
-import { createSessionProviderRoute } from "@mikandev/next-discord-auth/client";
-import { NextRequest } from "next/server";
+import { createSessionProviderRoute } from "@mikandev/next-discord-auth/server-actions";
 import "@/auth";
 
-export const GET = async (request: NextRequest) => {
-    createSessionProviderRoute(request)
-}
+export const GET = createSessionProviderRoute;
 ```
 
 <Aside type="caution">
