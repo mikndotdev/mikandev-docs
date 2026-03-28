@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "bun --bun astro check && bun --bun astro build",
     "preview": "astro preview",
     "format": "oxfmt",
     "astro": "astro",
