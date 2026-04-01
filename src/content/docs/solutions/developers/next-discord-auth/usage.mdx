@@ -6,8 +6,7 @@ import { PackageManagers } from "starlight-package-managers";
 import { Aside } from "@astrojs/starlight/components";
 
 <Aside type="note">
-  This package doesn't provide support for Client Components. Make sure all your auth logic is done
-  serverside.
+  By default, This package doesn't provide support for Client Components; the recommended approach is to use server components for any pages that require authentication. However, if you need to access session data in Client Components, you can set up a session provider route and use client-side hooks as described in the [Client-Side Usage](/solutions/developers/next-discord-auth/client) section.
 </Aside>
 
 ## Get Session
