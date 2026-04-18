@@ -37,6 +37,7 @@ export default defineConfig({
             src: "https://cdn.mikn.dev/analytics/script",
             defer: true,
             "data-website-id": "0d1bd726-0743-428c-b18f-21b380cb5ab0",
+            "data-host-url": "https://analytics.mikandev.com"
           },
         },
       ],
