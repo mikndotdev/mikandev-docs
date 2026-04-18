@@ -36,18 +36,8 @@ export default defineConfig({
           attrs: {
             src: "https://cdn.mikn.dev/analytics/script",
             defer: true,
+            "data-website-id": "0d1bd726-0743-428c-b18f-21b380cb5ab0",
           },
-        },
-        {
-          tag: "script",
-          content: `
-  document.addEventListener('DOMContentLoaded', function() {
-    swetrix.init('fy3w6Gq3Vl4K', {
-      apiURL: 'https://analytics.mikandev.com/backend/v1/log',
-    })
-    swetrix.trackViews()
-  })
-             `,
         },
       ],
       social: [
