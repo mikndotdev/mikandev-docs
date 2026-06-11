@@ -1,0 +1,112 @@
+---
+title: Doujin Game Manager
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+## What?
+
+Many doujin games offered made with RPG Maker include a web version of the game inside the download. Some don't, but out
+of the ones i've bought on Steam and DLsite, such as the offerings from Kagura Games have this directory. If you were to
+open up the `index.html` file in the www directory inside the game files, you'll find a 100% playable version of the game
+in your browser. DGM aims to supply an easy to use management frontend and hosting system so you can take your favourite
+games with you on the go without having to install them!
+
+## Installation guide
+
+1. Download the code or create a (private) repository and clone from the [repository](https://github.com/mikndotdev/DoujinGameManager).
+2. Add your game files to the `games` directory (copy the contents of the www folder into a directory, e.g. games/game1)
+3. Copy a thumbnail of the game (get from the store page or whatever) into the `public/thumbs` directory.
+4. Add the game to the registry file in `src/games.json`. the `id` field should match the name of the directory you created in step 2 (in this case, `game1`) `image` should be a relative path to the image you put in `thumbs` (e.g. `thumbs/game1.png`)
+
+## Deployment guide
+
+There are a couple ways of deploying DGM to the server of your choice, depending on whether you want the Cloud Save feature or not.
+
+### Static server (no cloud saves)
+
+- This is the most simple DGM implementation if you already have a web server setup. Any server capable of serving static assets will work.
+- You'll need [Bun](https://bun.com) installed to build the app.
+
+<Aside type="caution">
+    However tempting it may be, I highly recommend against deploying your DGM to a static hosting platform (e.g. Cloudflare Pages, Vercel).
+    You should use your own server, preferably not exposed to the public internet.
+</Aside>
+
+1. Install dependencies with `bun i`
+2. Build the app with `bun run build`
+3. Copy the contents of your `games` directory into the newly generated `dist` directory.
+4. Upload the `dist` directory to your web server, and enjoy!
+
+### Docker Compose Local (cloud saves capable)
+
+- This is the full DGM setup, including the Cloud Save API. A prebuilt image of the API is provided for your convenience.
+- You'll need [Docker](https://docs.docker.com/engine/install/) installed on whatever server you want to deploy DGM on.
+
+1. Copy your DGM files, including any games, to the server you wish to deploy on.
+2. Adjust the port for the `web` service in `docker-compose.yml` if neccesary.
+
+<Aside type="caution">
+    Again, make sure you're not exposing DGM to the public internet. Docker port mappings bypass firewall rules, so use a server without a
+    dedicated public IP address.
+</Aside>
+
+3. Run `docker compose build`. This may take a while depending on how large your games are.
+4. Run `docker compose up -d` to start DGM, and enjoy!
+
+### Docker Compose with registry (cloud saves capable)
+
+- This is same setup as before, but we use a container registry. Useful if you want to build DGM on a seperate machine to your deployment server.
+- You'll need to have a (preferably private) container registry. I'm using GHCR in this case, as it's free and offers private packages.
+
+1. Run `docker build -t ghcr.io/example/dgm` (change the container registry URL to whatever you're using). This may take a while depending on how large your games are.
+2. Run `docker push ghcr.io/example/dgm` to push the newly built image to the registry.
+3. On your deployment server, edit `docker-compose.yml` to use your prebuilt image for the `web` service instead of building it. Example:
+
+```yml
+services:
+  redis:
+    image: redis:alpine
+    restart: unless-stopped
+    command: ["redis-server", "--save", "60", "1", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+
+  api:
+    image: ghcr.io/mikndotdev/dgm-api:latest
+    restart: unless-stopped
+    environment:
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - redis
+
+  web:
+    image: ghcr.io/example/dgm:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+
+volumes:
+  redis-data:
+```
+
+The rest is the same as Step 2 from the Local Docker setup. Enjoy!
+
+### Don't want the Cloud Save API?
+
+- On Docker deployments, you can remove it if you don't want the complexity. Just edit `docker-compose.yml` to not include the API and Redis. Example for Local Docker:
+
+```yml
+services:
+ web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "80:80"
+```
+
+
