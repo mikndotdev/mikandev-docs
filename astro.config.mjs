@@ -51,33 +51,23 @@ export default defineConfig({
       sidebar: [
         {
           label: "General documentation",
-          autogenerate: {
-            directory: "general",
-          },
+          items: [{ autogenerate: { directory: "general" } }],
         },
         {
           label: "Solutions",
-          autogenerate: {
-            directory: "solutions/general",
-          },
+          items: [{ autogenerate: { directory: "solutions/general" } }],
         },
         {
           label: "Developer solutions",
-          autogenerate: {
-            directory: "solutions/developers",
-          },
+          items: [{ autogenerate: { directory: "solutions/developers" } }],
         },
         {
           label: "Self-host guides",
-          autogenerate: {
-            directory: "solutions/selfhost-guides",
-          },
+          items: [{ autogenerate: { directory: "solutions/selfhost-guides" } }],
         },
         {
           label: "Legal",
-          autogenerate: {
-            directory: "legal",
-          },
+          items: [{ autogenerate: { directory: "legal" } }],
         },
         { label: "llms.txt", link: "/llms.txt" },
       ],
