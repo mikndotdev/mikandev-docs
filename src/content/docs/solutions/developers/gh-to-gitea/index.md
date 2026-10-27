@@ -61,10 +61,10 @@ It reads the same `.env`, lists all repositories in each org via the GitHub API,
 | `GITEA_URL`             | yes               | —        | Base URL, e.g. `https://gitea.example.com` (no `/api/v1`).                                  |
 | `GITEA_TOKEN`           | yes               | —        | Gitea/Forgejo API token with repo create rights in `GITEA_ORG`.                             |
 | `GITEA_ORG`             | yes               | —        | Destination owner for every mirror. May be an org **or** a user.                            |
-| `MIRROR_INTERVAL`       | no                | `8h0m0s` | Pull-mirror sync cadence.                                                                    |
-| `MIRROR_LFS`            | no                | `false`  | Mirror Git LFS objects.                                                                      |
+| `MIRROR_INTERVAL`       | no                | `8h0m0s` | Pull-mirror sync cadence.                                                                   |
+| `MIRROR_LFS`            | no                | `false`  | Mirror Git LFS objects.                                                                     |
 | `MIRROR_PRIVATE`        | no                | `auto`   | `auto` matches the source visibility; `true`/`false` forces it.                             |
-| `LOG_LEVEL`             | no                | `info`   | Log verbosity.                                                                               |
+| `LOG_LEVEL`             | no                | `info`   | Log verbosity.                                                                              |
 
 ## GitHub webhook configuration
 

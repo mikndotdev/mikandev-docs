@@ -29,8 +29,9 @@ There are a couple ways of deploying DGM to the server of your choice, depending
 - You'll need [Bun](https://bun.com) installed to build the app.
 
 <Aside type="caution">
-    However tempting it may be, I highly recommend against deploying your DGM to a static hosting platform (e.g. Cloudflare Pages, Vercel).
-    You should use your own server, preferably not exposed to the public internet.
+  However tempting it may be, I highly recommend against deploying your DGM to a static hosting
+  platform (e.g. Cloudflare Pages, Vercel). You should use your own server, preferably not exposed
+  to the public internet.
 </Aside>
 
 1. Install dependencies with `bun i`
@@ -47,8 +48,8 @@ There are a couple ways of deploying DGM to the server of your choice, depending
 2. Adjust the port for the `web` service in `docker-compose.yml` if neccesary.
 
 <Aside type="caution">
-    Again, make sure you're not exposing DGM to the public internet. Docker port mappings bypass firewall rules, so use a server without a
-    dedicated public IP address.
+  Again, make sure you're not exposing DGM to the public internet. Docker port mappings bypass
+  firewall rules, so use a server without a dedicated public IP address.
 </Aside>
 
 3. Run `docker compose build`. This may take a while depending on how large your games are.
@@ -100,7 +101,7 @@ The rest is the same as Step 2 from the Local Docker setup. Enjoy!
 
 ```yml
 services:
- web:
+  web:
     build:
       context: .
       dockerfile: Dockerfile
@@ -108,5 +109,3 @@ services:
     ports:
       - "80:80"
 ```
-
-

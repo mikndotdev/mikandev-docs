@@ -8,8 +8,7 @@
     "build": "bun --bun astro check && bun --bun astro build",
     "preview": "astro preview",
     "format": "oxfmt",
-    "astro": "astro",
-    "deploy": "wrangler deploy"
+    "astro": "astro"
   },
   "dependencies": {
     "@astrojs/check": "0.9.10",

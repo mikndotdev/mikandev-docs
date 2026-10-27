@@ -8,7 +8,6 @@ title: "Cookie Policy"
 
 # Stuff to make the EU happy
 
-
 ## First-party cookies
 
 - We use cookies to store data that are used for the core functionality of our services.
